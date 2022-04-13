@@ -21,11 +21,21 @@ Install dependencies
 
 Before run, store a `config.js` file in the project folder. The config sample can be find in `config.sample.js`
 
+AND 
+
+Add to data folder `telegram.json` file with default params `{ "last_notified_proposal_id": 0 }`
+
 RUN with cron:
 
 example:
 ```
   */30 * * * * cd /user/Haimdallbot && npm run run:tlg --silent >> /user/haimdallbot.log
+```
+if use `nvm` do alias 
+
+```
+sudo ln -s "$(which node)" /usr/bin/node
+sudo ln -s "$(which npm)" /usr/bin/npm
 ```
 [cron examples](https://crontab.guru/examples.html)
 
