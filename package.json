@@ -1,0 +1,29 @@
+{
+    "name": "heimdallbot",
+    "version": "1.0.0",
+    "description": "Bot for notifications about new Odin protocol proposals",
+    "main": "./src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "run:tlg": "NODE_ENV=production node ./src/index.js",
+        "start:local": "DEBUG=\"grammy*\" nodemon index.js",
+        "format:check": "prettier --check .",
+        "format:write": "prettier --write .",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "prepare": "husky install"
+    },
+    "author": "ruslanglaznyov",
+    "license": "MIT",
+    "devDependencies": {
+        "eslint": "^8.13.0",
+        "eslint-config-prettier": "^8.5.0",
+        "husky": "^7.0.4",
+        "prettier": "^2.6.2"
+    },
+    "dependencies": {
+        "axios": "^0.26.1",
+        "grammy": "^1.7.3",
+        "tslog": "^3.3.3"
+    }
+}
