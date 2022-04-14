@@ -29,7 +29,7 @@ RUN with cron:
 
 example:
 ```
-  */30 * * * * cd /user/Haimdallbot && npm run run:tlg --silent >> /user/haimdallbot.log
+  */30 * * * * cd /user/Heimdallbot && npm run run:tlg --silent >> /user/heimdallbot.log
 ```
 if use `nvm` do alias 
 
