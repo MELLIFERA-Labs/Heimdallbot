@@ -1,68 +1,56 @@
-const { Bot } = require('grammy')
-const configManager = require('./config-manager')
-configManager.init()
-const { getProposals } = require('./propsals-api')
-const fs = require('fs')
-const log = require('./logger').Logger('telegram')
-const bot = new Bot(configManager.config.BOT_TOKEN)
+const commander = require('commander')
+const { Config, globalConfig } = require('./config-manager')
+const Logger = require('./logger')
+const log = Logger.Logger('CLI')
+const constant = require('./constant')
+const telegramMessage = require('./message/telegram.message')
+const discordMessage = require('./message/discord.message')
+const executeMessage = require('./execute-message')
+const Store = require('./store')
+globalConfig.init('./config/global.config.js')
 
-function createMessageFromProposal(proposal) {
-    return `New proposal #${proposal.proposal_id}\n\n***${
-        proposal.content.title
-    }***\n\n${proposal.content.description}\n\nStart: ${
-        proposal.voting_start_time.split('T')[0]
-    }\nEnd:  ${
-        proposal.voting_end_time.split('T')[0]
-    } \n\nTo vote: https://mainnet.odinprotocol.io/proposal/${
-        proposal.proposal_id
-    }`
-}
-
-async function main() {
-    log.info('Start')
-    const proposals = await getProposals()
-    const propData = JSON.parse(
-        fs.readFileSync('./data/telegram.json', 'utf-8')
-    )
-
-    const actualProposals = proposals
-        .filter(
-            (proposal) => proposal.status === 'PROPOSAL_STATUS_VOTING_PERIOD'
-        )
-        .filter(
-            (prop) =>
-                Number(prop.proposal_id) > propData['last_notified_proposal_id']
-        )
-
-    if (actualProposals.length) {
-        for (const prop of actualProposals) {
-            await bot.api.sendMessage(
-                configManager.config.CHAT_ID,
-                createMessageFromProposal(prop),
-                {
-                    parse_mode: 'Markdown',
-                }
-            )
-            log.info(
-                'successfully notified! proposal number:',
-                prop.proposal_id
+const program = new commander.Command()
+program
+    .command('run')
+    .description('Run a bot')
+    .option('--telegram', 'run with `telegram` transport')
+    .option('--discord', 'run with `discord` transport')
+    .action(async (option) => {
+        if (!option.telegram && !option.discord) {
+            log.error('specify transport')
+        }
+        const executions = []
+        if (option.telegram) {
+            const telegramExecute = async () => {
+                const configInstance = Config()
+                configInstance.init(constant.TELEGRAM_CONFIG_PATH)
+                const logger = Logger.createLogger('telegram')
+                const store = new Store(constant.TELEGRAM_DATA_PATH)
+                const telegram = new telegramMessage(configInstance.config)
+                await executeMessage(telegram, logger, store)
+            }
+            executions.push(
+                telegramExecute().catch((e) =>
+                    log.fatal('telegram execution fail', e)
+                )
             )
         }
-        const lastProp = actualProposals.sort(
-            (a, b) => b.proposal_id - a.proposal_id
-        )[0]
-        fs.writeFileSync(
-            './data/telegram.json',
-            JSON.stringify({
-                last_notified_proposal_id: Number(lastProp.proposal_id),
-            })
-        )
-        log.info(
-            'successfully state updated! proposal number changed:',
-            lastProp.proposal_id
-        )
-    }
-    log.info('End')
-}
+        if (option.discord) {
+            const discordExecute = async () => {
+                const configInstance = Config()
+                configInstance.init(constant.DISCORD_CONFIG_PATH)
+                const logger = Logger.createLogger('discord')
+                const store = new Store(constant.DISCORD_DATA_PATH)
+                const discord = new discordMessage(configInstance.config)
+                await executeMessage(discord, logger, store)
+            }
+            executions.push(
+                discordExecute().catch((e) =>
+                    log.fatal('discord execution fail', e)
+                )
+            )
+        }
+        await Promise.allSettled(executions)
+    })
 
-main().catch(log.fatal)
+program.parse()

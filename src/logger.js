@@ -5,4 +5,7 @@ module.exports = {
     Logger: (name) => {
         return log.getChildLogger({ name })
     },
+    createLogger: (name) => {
+        return new Logger().getChildLogger({ name })
+    },
 }

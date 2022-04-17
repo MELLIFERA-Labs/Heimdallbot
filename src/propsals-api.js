@@ -1,8 +1,9 @@
-const { config } = require('./config-manager')
+const { globalConfig } = require('./config-manager')
 const axios = require('axios')
 
 async function getProposals() {
-    const data = (await axios.get(config.PROPOSALS_API_REST_URL)).data
+    const data = (await axios.get(globalConfig.config.PROPOSALS_API_REST_URL))
+        .data
     return data.proposals
 }
 

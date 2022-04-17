@@ -5,7 +5,8 @@
     "main": "./src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "run:tlg": "NODE_ENV=production node ./src/index.js",
+        "start": "NODE_ENV=production node ./src/index.js run",
+        "setup": "NODE_ENV=prodction node ./src/set-up-data.js",
         "start:local": "DEBUG=\"grammy*\" nodemon index.js",
         "format:check": "prettier --check .",
         "format:write": "prettier --write .",
@@ -22,7 +23,11 @@
         "prettier": "^2.6.2"
     },
     "dependencies": {
+        "@discordjs/rest": "^0.3.0",
         "axios": "^0.26.1",
+        "commander": "^9.2.0",
+        "discord-api-types": "^0.31.1",
+        "discord.js": "^13.6.0",
         "grammy": "^1.7.3",
         "tslog": "^3.3.3"
     }

@@ -1,6 +1,12 @@
 const path = require('path')
-const configSample = require('./../config.sample')
-function checkConfigKeys(config) {
+
+function configSampleByConfigName(configName) {
+    const arr = configName.split('.')
+    arr.splice(2, 0, 'sample')
+    return arr.join('.')
+}
+
+function checkConfigKeys(config, configSample) {
     const configKeys = Object.keys(config)
     Object.entries(configSample)
         .map(([key, value]) => (value ? key : null))
@@ -12,21 +18,30 @@ function checkConfigKeys(config) {
         })
 }
 
+// 'discord.config.sample.js'.split('.').filter(it => i!='sample')
 function Config() {
     let config = null
     return {
         init: (configPath) => {
             if (config) return
-            if (configPath) {
-                try {
-                    config = require(path.resolve(process.cwd(), configPath))
-                    checkConfigKeys(config)
-                } catch (e) {
-                    throw new Error('Error to load config')
-                }
+            if (!configPath) throw new Error('config path should be specified')
+            let configSample = {}
+            try {
+                config = require(path.resolve(process.cwd(), configPath))
+                const configSampleName = configSampleByConfigName(
+                    configPath.split('/').at(-1)
+                )
+                configSample = require(path.resolve(
+                    process.cwd(),
+                    'config',
+                    configSampleName
+                ))
+            } catch (e) {
+                throw new Error('Error to load config')
             }
-            config = require(path.resolve(process.cwd(), 'config.js'))
-            checkConfigKeys(config)
+            checkConfigKeys(config, configSample)
+            // config = require(path.resolve(process.cwd(), 'config.js'))
+            // checkConfigKeys(config)
         },
         get config() {
             if (!config)
@@ -36,4 +51,7 @@ function Config() {
     }
 }
 
-module.exports = Config()
+module.exports = {
+    globalConfig: Config(),
+    Config,
+}

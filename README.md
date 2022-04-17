@@ -14,23 +14,35 @@ requirements:
 node.js >=16.14.2
 ```
 
+### Install dependencies
 
-Install dependencies
-
-`npm install`
-
-Before run, store a `config.js` file in the project folder. The config sample can be find in `config.sample.js`
-
-AND 
-
-Add to data folder `telegram.json` file with default params `{ "last_notified_proposal_id": 0 }`
-
-RUN with cron:
-
-example:
 ```
-  */30 * * * * cd /user/Heimdallbot && npm run run:tlg --silent >> /user/heimdallbot.log
+npm install
 ```
+### Set up storage with command
+```
+npm run setup  
+```
+### Set up configs.
+
+Before run, store a `global.config.js` file in the project config folder. The config sample can be find in config folder `global.config.sample.js`
+- SET `telegram` config.
+If you want to run message via telegram transport, create  `telegram.config.js` in `config/` folder. Sample is `telegram.config.sample.js`
+- SET `discord` config. If you want to run message via discord transport, create  `discord.config.js` in `config/` folder. Sample is `discord.config.sample.js`
+- SET both config if you want to run `discord` and `telegram`
+
+
+### RUN with cron:
+
+example with 2 transports:
+```
+  */30 * * * * cd /user/Heimdallbot && npm start -- --telegram --discord --silent >> /user/heimdallbot.log
+```
+example with 1 transports:
+```
+  */30 * * * * cd /user/Heimdallbot && npm start --silent -- --telegram >> /user/heimdallbot.log
+```
+
 if use `nvm` do alias 
 
 ```
