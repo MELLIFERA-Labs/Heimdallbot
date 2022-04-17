@@ -19,7 +19,7 @@ node.js >=16.14.2
 ```
 npm install
 ```
-### Set up store with command
+### Set up storage with command
 ```
 npm run setup  
 ```
