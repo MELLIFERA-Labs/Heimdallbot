@@ -20,7 +20,6 @@ program
             log.error('specify transport')
         }
         const executions = []
-        // '2023400876:AAF5Wrj6fxZCKCyLPsi5O8iQVILxHzL4wAE'
         if (option.telegram) {
             const telegramExecute = async () => {
                 const configInstance = Config()

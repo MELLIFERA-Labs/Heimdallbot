@@ -45,5 +45,3 @@ async function executeMessage(transport, log, store) {
     log.info('End')
 }
 module.exports = executeMessage
-
-// main().catch(log.fatal)
