@@ -36,7 +36,7 @@ If you want to run message via telegram transport, create  `telegram.config.js` 
 
 example with 2 transports:
 ```
-  */30 * * * * cd /user/Heimdallbot && npm start -- --telegram --discord --silent >> /user/heimdallbot.log
+  */30 * * * * cd /user/Heimdallbot && npm start --silent -- --telegram --discord  >> /user/heimdallbot.log
 ```
 example with 1 transports:
 ```
