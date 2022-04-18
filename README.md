@@ -5,6 +5,7 @@ Bot for notifications about new Odin protocol proposals
 <img src="heimdall.png" width="30%">
 
 Telegram: https://t.me/ODINproposals
+Discord: https://discord.gg/cUXKyRq
 
 
 ## How to run a bot
