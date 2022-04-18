@@ -1,6 +1,6 @@
 
 # Heimdallbot
-Bot for notifications about new Odin protocol proposals
+Bot for notifications about new [Odin protocol](https://odinprotocol.io/) proposals
 
 <img src="heimdall.png" width="30%">
 
