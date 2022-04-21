@@ -1,13 +1,18 @@
 
 # Heimdallbot
-Bot for notifications about new [Odin protocol](https://odinprotocol.io/) proposals
+Bot for notifications about new proposals in Cosmos
 
 <img src="heimdall.png" width="30%">
+
+[Odin protocol](https://odinprotocol.io/):
 
 Telegram: https://t.me/ODINproposals
 
 Discord: https://discord.gg/cUXKyRq
 
+[Kyve network](https://kyve.network/) testnet: 
+
+Telegram: https://t.me/KyveProposals
 
 ## How to run a bot
 
