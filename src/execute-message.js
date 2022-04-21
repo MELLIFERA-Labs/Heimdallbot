@@ -1,12 +1,13 @@
 const { getProposals } = require('./propsals-api')
-const constant = require('./constant')
+const { globalConfig } = require('./config-manager')
+
 function createMessageFromProposal(proposal) {
     return `New proposal #${proposal.proposal_id}\n\n***${
         proposal.content.title
     }***\n\n${proposal.content.description}\n\nStart: ${
         proposal.voting_start_time.split('T')[0]
     }\nEnd:  ${proposal.voting_end_time.split('T')[0]} \n\nTo vote: ${
-        constant.TO_VOTE_PROPOSAL_URL
+        globalConfig.config.TO_VOTE_PROPOSAL_URL
     }${proposal.proposal_id}`
 }
 
