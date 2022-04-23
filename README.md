@@ -1,3 +1,4 @@
+![code_quality_score](https://api.codiga.io/project/33110/score/svg)
 
 # Heimdallbot
 Bot for notifications about new proposals in Cosmos
