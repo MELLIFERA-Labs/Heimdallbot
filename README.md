@@ -44,11 +44,11 @@ If you want to run message via telegram transport, create  `telegram.config.js` 
 
 example with 2 transports:
 ```
-  */30 * * * * cd /user/Heimdallbot && npm start --silent -- --telegram --discord  >> /user/heimdallbot.log
+  */30 * * * * cd /user/Heimdallbot && npm start --silent -- --telegram --discord  >> /user/heimdallbot.log 2>&1
 ```
 example with 1 transports:
 ```
-  */30 * * * * cd /user/Heimdallbot && npm start --silent -- --telegram >> /user/heimdallbot.log
+  */30 * * * * cd /user/Heimdallbot && npm start --silent -- --telegram >> /user/heimdallbot.log 2>&1
 ```
 
 if use `nvm` do alias 
